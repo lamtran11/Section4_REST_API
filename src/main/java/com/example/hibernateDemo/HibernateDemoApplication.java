@@ -23,10 +23,37 @@ public class HibernateDemoApplication {
 			
 //			createStudent(studentDAO);
 			
-			createMultipleStudent(studentDAO);
+//			createMultipleStudent(studentDAO);
+			
+			readStudent(studentDAO);
 			
 		};		
 	}
+
+	private void readStudent(StudentDAO studentDAO) {
+		// 1.Create a student object
+		System.out.println("Creating new student object.....");
+		Student tempStudent = new Student("John", "Doe", "john@gmail.com");
+		
+		//Save the student
+		System.out.println("Saving the student........");
+		studentDAO.save(tempStudent);
+		
+		
+		//Display id of the saved student
+		int theId = tempStudent.getId();
+		System.out.println("Saved student. Generated id: " + theId);
+		
+		
+		//Retrive student based on the id: primary key
+		System.out.println("Retrieving student with primary key: " + theId);
+		Student foundStudent = studentDAO.findById(theId);
+		
+		
+		//Display student
+		System.out.println("Found student: " + foundStudent);		
+	}
+
 
 	private void createMultipleStudent(StudentDAO studentDAO) {
 		//1. Create student object
@@ -42,7 +69,6 @@ public class HibernateDemoApplication {
 		studentDAO.save(tempStudent2);
 		studentDAO.save(tempStudent3);
 	
-		
 	}
 
 
