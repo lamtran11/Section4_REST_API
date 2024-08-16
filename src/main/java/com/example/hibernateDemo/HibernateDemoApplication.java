@@ -46,6 +46,7 @@ public class HibernateDemoApplication {
 		};		
 	}
 
+	//This delete method
 	private void deleteAll(StudentDAO studentDAO) {
 		 
          System.out.println("All students deleted");
