@@ -1,3 +1,4 @@
+package com.example.hibernateDemo;
 
 
 import org.springframework.boot.CommandLineRunner;
