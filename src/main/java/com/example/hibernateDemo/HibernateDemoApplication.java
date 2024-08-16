@@ -26,7 +26,8 @@ public class HibernateDemoApplication {
 			
 //			createStudent(studentDAO);
 			
-			createMultipleStudent(studentDAO);
+//			createMultipleStudent(studentDAO);
+
 			
 //			readStudent(studentDAO);
 			
