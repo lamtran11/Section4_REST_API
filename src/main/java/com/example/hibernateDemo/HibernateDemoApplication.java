@@ -58,7 +58,7 @@ public class HibernateDemoApplication {
 
 
 	private void deleteStudent(StudentDAO studentDAO) {
-		//1. Retrieve student based on the id
+		//1. Retrieve student based on the id,...
 		int studentId = 3;
 		System.out.println("Delete student by id " + studentId);
 		
