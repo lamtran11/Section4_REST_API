@@ -1,12 +1,14 @@
 package com.example.springCrudDemo.dao;
 
-import com.example.springCrudDemo.entity.Employee;
+import java.util.List;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.example.springCrudDemo.entity.Employee;
 
 @Repository
 public class EmployeeDAOJpaImpl implements EmployeeDAO {
@@ -35,16 +37,57 @@ public class EmployeeDAOJpaImpl implements EmployeeDAO {
 
     @Override
     public Employee findById(int theId) {
-        return null;
+    	
+    	//Get employee 
+//    	TypedQuery<Employee> theQuery = entityManager.createQuery("SELECT ",Employee.class);
+    	Employee theEmployee = entityManager.find(Employee.class, theId);
+    	
+    	//return the employee
+        return theEmployee;
     }
 
     @Override
     public Employee save(Employee theEmployee) {
-        return null;
+    	//save the employee
+    	Employee dbEmployee = entityManager.merge(theEmployee);
+    	
+    	//return the db employee
+        return dbEmployee;
     }
 
     @Override
     public void deleteById(int theId) {
-
+    	//Find employee by id
+    	Employee deleteEmployee = entityManager.find(Employee.class, theId);
+    	
+    	//Delete employee by id
+    	entityManager.remove(deleteEmployee);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
