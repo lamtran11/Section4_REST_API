@@ -1,18 +1,10 @@
 package com.example.springCrudDemo.rest;
 
-import java.util.List;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.example.springCrudDemo.entity.Employee;
 import com.example.springCrudDemo.service.EmployeeService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -68,14 +60,12 @@ public class EmployeeRestController {
     	Employee dbEmployee = employeeService.save(theEmployee);
     	
     	return dbEmployee;
-    	
     }
     
     @PutMapping("/employees")
     public Employee updateEmployee(@RequestBody Employee theEmployee) {
     	
     	Employee updateEmployee = employeeService.save(theEmployee);
-    	
     	return updateEmployee;
     }
     
@@ -93,15 +83,9 @@ public class EmployeeRestController {
         
         //Delete employee
         employeeService.deleteById(employeeId);
-        
-        
+
         return "Delete employee id - " + employeeId;
-        
-        
     }
-    
-  
-    
 }
 
 
