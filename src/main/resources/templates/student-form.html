@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Student Form</title>
+</head>
+
+<body>
+
+	Student Form Page: <br><br>
+
+	<form th:action="@{/processStudentForm}" th:object="${student}" method="POST">
+
+		First Name: <input type="text" th:field="${student.firstName}"> <br><br>
+
+		Last Name: <input type="text" th:field="${student.lastName}"> <br><br>
+
+		Country:
+		<!--		We can use *{country} instead of ${student.country}-->
+		<!--		<select th:field="*{country}">-->
+		<!--		    <option th:value="'Japan'" th:text="Japan"></option>-->
+		<!--		    <option th:value="'England'" th:text="England"></option>-->
+		<!--			<option th:value="'Other'" th:text="Other"></option>-->
+		<!--		</select>-->
+
+		<select th:field="${student.country}">
+
+			<!--			th:value="${tempCountry} - send during submission-->
+			<option th:each="tempCountry : ${countries}" th:value="${tempCountry}" th:text="${tempCountry}"> </option>
+
+		</select>
+
+		<br><br>
+
+		Favorite Programming Language:
+
+		<!--		<input type="radio" th:field="*{favoriteLanguage}" th:value="JavaScript">JavaScript</input>-->
+		<!--		<input type="radio" th:field="*{favoriteLanguage}" th:value="Java">Java</input>-->
+		<!--		<input type="radio" th:field="*{favoriteLanguage}" th:value="PHP">PHP</input>-->
+
+		<input type="radio" th:field="*{favoriteLanguage}" th:each="tempLanguage : ${languages}"
+			th:value="${tempLanguage}" th:text="${tempLanguage}" />
+
+
+		<br><br>
+		
+		Favorite Operating Systems:
+<!--		<input type="checkbox" th:field="*{favoriteOS}" th:value="Windows">Windows</input>-->
+<!--		<input type="checkbox" th:field="*{favoriteOS}" th:value="Mac">Mac</input>-->
+<!--		<input type="checkbox" th:field="*{favoriteOS}" th:value="Linux">Linux</input>-->
+<!--		<input type="checkbox" th:field="*{favoriteOS}" th:value="Other">Other</input>-->
+
+		<input type="checkbox" th:field="*{favoriteOS}" th:each="tempOS : ${systems}" 
+							   th:value="${tempOS}" th:text="${tempOS}"/>
+		
+		<br><br>
+		
+
+		<input type="submit" value="Submit" />
+	</form>
+</body>
+
+</html>
