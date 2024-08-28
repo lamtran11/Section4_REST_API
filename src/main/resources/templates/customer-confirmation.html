@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	
+	Confirm Customer:
+	
+	<p th:text="'Customer Last Name: ' + ${customer.lastName}">Customer Last Name: </p>
+	<p th:text="'Customer First Name: ' + ${customer.firstName}">Customer First Name: </p>
+
+	<p th:text="'Customer Pass Number: ' + ${customer.passNumber}">Customer Pass Number: </p>
+
+	<p th:text="'Customer Postal Code: ' + ${customer.postalCode}">Customer Postal Code: </p>
+
+</body>
+
+</html>
