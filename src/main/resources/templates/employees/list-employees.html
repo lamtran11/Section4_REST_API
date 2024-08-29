@@ -2,46 +2,50 @@
 <html lang="en" xmlns="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/style.css">
-    <title>Employee List</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="/css/style.css">
+	<title>Employee List</title>
 </head>
+
 <body>
 
-<h1 class="header">List All Employees</h1>
+	<h1 class="header">List All Employees</h1>
 
-<a th:href="@{/employees/add}" class="button">Add New Employee</a>
-
-
-<table>
-    <thead>
-    <tr>
-        <th>Last Name</th>
-        <th>First Name</th>
-        <th>Email</th>
-        <th>Action</th>
-    </tr>
-    </thead>
-
-    <tbody>
-
-    <tr th:each="tempEmployee : ${employees}">
-        <td th:text="${tempEmployee.lastName}"/>
-        <td th:text="${tempEmployee.firstName}"/>
-        <td th:text="${tempEmployee.email}"/>
+	<a th:href="@{/employees/add}" class="button">Add New Employee</a>
 
 
-        <td>
-            <a th:href="@{/employess/update(employeeId=${tempEmployee.id})}">Update</a>
-        </td>
+	<table>
+		<thead>
+			<tr>
+				<th>Last Name</th>
+				<th>First Name</th>
+				<th>Email</th>
+				<th>Action</th>
+			</tr>
+		</thead>
 
-    </tr>
+		<tbody>
 
+			<tr th:each="tempEmployee : ${employees}">
+				<td th:text="${tempEmployee.lastName}" />
+				<td th:text="${tempEmployee.firstName}" />
+				<td th:text="${tempEmployee.email}" />
 
+				<td>
+					<a th:href="@{/employees/update(employeeId=${tempEmployee.id})}">Update</a>
+				</td>
 
-    </tbody>
-</table>
+				<td>
+					<a th:href="@{/employees/delete(employeeId=${tempEmployee.id})}"
+					   onclick="if(!(confirm)('Are you sure to delete this employee?')) return false">Delete</a>
+				</td>
+
+			</tr>
+
+		</tbody>
+	</table>
 
 
 </body>
+
 </html>

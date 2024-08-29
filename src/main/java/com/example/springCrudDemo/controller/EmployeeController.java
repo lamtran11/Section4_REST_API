@@ -1,12 +1,17 @@
 package com.example.springCrudDemo.controller;
 
-import com.example.springCrudDemo.entity.Employee;
-import com.example.springCrudDemo.service.EmployeeService;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
+import com.example.springCrudDemo.entity.Employee;
+import com.example.springCrudDemo.service.EmployeeService;
 
 @Controller
 @RequestMapping("/employees")
@@ -43,18 +48,29 @@ public class EmployeeController {
 
     //mapping for save employee
     @PostMapping("/save")
-    public String saveEmployee(Employee theEmployee) {
+    public String saveEmployee(@ModelAttribute("employee") Employee theEmployee) {
+    	
          employeeService.save(theEmployee);
 
         return "redirect:/employees/list";
     }
 
-    @PutMapping("/update")
-    public String updateEmployee(@ModelAttribute("employee") Employee theEmployee) {
+    @GetMapping("/update")
+    public String updateEmployee(@RequestParam("employeeId") int theId, Model theModel) {
 
-         employeeService.save(theEmployee);
+        Employee theEmployee = employeeService.findById(theId);
+        
+        theModel.addAttribute("employee", theEmployee);
 
-        return "redirect:/employees/list";
+        return "employees/employee-form";
+    }
+    
+    @GetMapping("/delete")
+    public String deleteById(@RequestParam("employeeId") int theId) {
+    	
+    	employeeService.deleteById(theId);
+    	
+    	return "redirect:/employees/list";
     }
 
 }

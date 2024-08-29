@@ -9,9 +9,16 @@
 
     <h1 class="header">Employee Form Page</h1>
 
-    <form th:action="@{/employees/save}" th:object="${employee}" method="POST">
+<!--	The action="#" is a placeholder and is overridden by Thymeleaf using th:action. -->
+<!--	The # typically prevents the page from navigating away if the form is submitted without -->
+<!--	JavaScript enabled or if Thymeleaf fails to process it.-->
+    <form action="#" th:action="@{/employees/save}" th:object="${employee}" method="POST">
 
         <div>
+			
+<!--			Add hidden form field to handle update-->
+			<input type="hidden" th:field="*{id}"/>
+			
             <p>Last Name
                 <input type="text" th:field="${employee.lastName}" placeholder="Last Name">
             </p>
