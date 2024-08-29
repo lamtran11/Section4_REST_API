@@ -19,12 +19,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> findAll() {
-        return employeeRepository.findAll();
+        return employeeRepository.findAllByOrderByLastNameAsc();
     }
 
 	@Override
 	public Employee findById(int theId) {
-		// TODO 自動生成されたメソッド・スタブ
 		Optional<Employee> result = employeeRepository.findById(theId);
 
 		Employee theEmployee = null;
@@ -42,6 +41,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public Employee save(Employee theEmployee) {
 		// TODO 自動生成されたメソッド・スタブ
 		return employeeRepository.save(theEmployee);
+	}
+
+	@Override
+	public Employee update(int theId) {
+
+		Optional<Employee> result = employeeRepository.findById(theId);
+
+        Employee theEmployee = null;
+
+		 if (result.isPresent()) {
+             theEmployee = result.get();
+        } else {
+             throw new RuntimeException("Employee not found with id: " + theId);
+        }
+		 return theEmployee;
 	}
 
 	@Override

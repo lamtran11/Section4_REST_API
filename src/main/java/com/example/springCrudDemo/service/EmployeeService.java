@@ -1,8 +1,8 @@
 package com.example.springCrudDemo.service;
 
-import java.util.List;
-
 import com.example.springCrudDemo.entity.Employee;
+
+import java.util.List;
 
 public interface EmployeeService {
 
@@ -11,6 +11,8 @@ public interface EmployeeService {
     Employee findById(int theId);
 
     Employee save(Employee theEmployee);
+
+    Employee update(int theId);
 
     void deleteById(int theId);
 }
