@@ -16,4 +16,6 @@ public interface StudentService {
 	
 	void deleteById(int theId);
 	
+	boolean emailExists(String email);
+	
 }

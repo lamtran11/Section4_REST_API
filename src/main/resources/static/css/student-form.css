@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+.error {
+	color: red;
+}
+
+.student-form {
+	width: 100%;
+	text-align: left;
+	border: 1px solid rgb(192, 192, 192)
+}
+
+h1 {
+	font-size: 24px;
+	text-align: center;
+	margin-left: 20px;
+}
+
+.form-field {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	align-items: left;
+	margin-left: 20px;
+}
+
+.button {
+	color: white;
+	background-color: #4CAF50;
+	text-decoration: none;
+	display: inline-block;
+	padding: 10px 20px;
+	transition: background-color 0.3s;
+
+}
+
+.button:hover {
+	background-color: rgb(192, 192, 192);
+	/* Darker shade on hover */
+}

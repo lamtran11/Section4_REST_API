@@ -4,29 +4,48 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Student Register Form</title>
+	<link rel="stylesheet" href="/css/student-form.css">
 </head>
 
 <body>
 
-	<form th:action="@{/students/save}" th:object="${student}" method="POST">
+	<form action="#" th:action="@{/students/save}" th:object="${student}" method="POST" class="student-form">
+
+		<input type="hidden" th:field="*{id}">
 
 		<h1>Student Register Form</h1>
 
-		<p>Last Name:
-			<input type="text" th:field="${student.lastName}">
-		</p>
+		<div class="form-field">
+			<p>First Name:
+				<input type="text" th:field="${student.firstName}">
+			</p>
 
-		<p>First Name:
-			<input type="text" th:field="${student.firstName}">
-		</p>
+			<p>
+				Last Name:
+				<input type="text" th:field="*{lastName}" />
+				<!-- Display error message if any -->
+				<span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="error"></span>
+			</p>
 
-		<p>Email Address:
-			<input type="text" th:field="${student.email}">
-		</p>
+			<p>
+				Email Address:
+				<input type="text" th:field="${student.email}">
 
-		<p>
-			<input type="submit" value="Save">
-		</p>
+				<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error">
+			</p>
+
+			<p>
+				<input type="submit" value="Save" class="button">
+			</p>
+			
+			<p>
+				<a th:href="@{/students/studentList}" class="button">Return Student List Page</a>
+			</p>
+			
+
+		</div>
+
+
 
 	</form>
 
