@@ -27,6 +27,7 @@ public class Student {
 	private String lastName;
 
 	@Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$", message = "Gmailの形式が正しくない。")
+	@NotNull(message = "このフィルドが必須です。")
 	@Column(name = "email")
 	private String email;
 
