@@ -1,5 +1,8 @@
 package com.example.demo.entity;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,6 +12,8 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "student")
@@ -31,15 +36,34 @@ public class Student {
 	@Column(name = "email")
 	private String email;
 
+	@CreationTimestamp
+	@Column(name = "created_at", updatable = false)
+	private LocalDateTime createdAt;
+
 	public Student() {
 
 	}
 
-	public Student(int id, String firstName, String lastName, String email) {
+	public Student(int id, String firstName, String lastName, String email, LocalDateTime createdAt) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
+		this.createdAt = createdAt;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public String getFormattedCreatedAt() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy年MM月dd(EEEE)");
+		
+		return createdAt != null ? createdAt.format(formatter) : "Not Available";
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
 	}
 
 	public int getId() {

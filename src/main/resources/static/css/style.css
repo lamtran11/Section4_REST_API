@@ -42,15 +42,16 @@ table {
 	color: rgb(0, 0, 0);
 	padding: 10px;
 }
+/*th, td {*/
+/*	display:inline;*/
+/*}*/
 
-td,
-th {
+th, td {
 	padding: 12px 15px;
 	border: 1px solid #ddd;
 }
 
-tbody,
-tr {
+tbody {
 	padding: 12px 15px;
 	border: 1px solid #ddd;
 }

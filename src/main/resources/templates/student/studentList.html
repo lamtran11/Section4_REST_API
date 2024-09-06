@@ -14,19 +14,19 @@
 		<input type="submit" value="Logout" class="logout" />
 	</form>
 
-<!--	<p>-->
-<!--		USER: <span sec:authentication="principal.username"></span> <br><br>-->
+	<!--	<p>-->
+	<!--		USER: <span sec:authentication="principal.username"></span> <br><br>-->
 
-<!--		ROLE: <span sec:authentication="principal.authorities"></span>-->
+	<!--		ROLE: <span sec:authentication="principal.authorities"></span>-->
 
-<!--	</p>-->
-	
+	<!--	</p>-->
+
 	<p>
-	    USER: <span sec:authentication="name"></span> <br><br>
-	    ROLE: <span sec:authentication="authorities"></span>
+		USER: <span sec:authentication="name"></span> <br><br>
+		ROLE: <span sec:authentication="authorities"></span>
 	</p>
 
-	
+
 	<h1>Student List</h1>
 
 	<a th:href="@{/students/add}" class="button">Add New Student</a>
@@ -34,19 +34,33 @@
 	<table class="header">
 		<thead>
 			<tr>
+				<th>Student No</th>
 				<th>First Name</th>
 				<th>Last Name</th>
 				<th>Email</th>
-				<th >Action</th>
+				<th>Created At</th>
+				<th>Action</th>
 			</tr>
 		</thead>
 
 		<tbody>
 
 			<tr th:each="tempStudent : ${student}">
+
+				<td th:text="${tempStudent.id}" />
+
 				<td th:text="${tempStudent.firstName}" />
 				<td th:text="${tempStudent.lastName}" />
 				<td th:text="${tempStudent.email}" />
+
+				<!--				Using thymeleaf - format in frontend-->
+				<!--				<td th:text="${tempStudent.createdAt != null -->
+				<!--							? tempStudent.createdAt.format(T(java.time.format.DateTimeFormatter).ofPattern('yyyy-MM-dd')) -->
+				<!--							: 'Not Available'}"/>-->
+
+				<!--				<td>-->
+
+				<td th:text="${tempStudent.formattedCreatedAt}" />
 
 				<td>
 
