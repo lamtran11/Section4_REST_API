@@ -10,8 +10,7 @@
 <body>
 
 	<form action="#" th:action="@{/students/save}" th:object="${student}" method="POST" class="student-form">
-
-		<input type="hidden" th:field="*{id}">
+		<input type="hidden" th:field="*{id}" />
 
 		<h1>Student Register Form</h1>
 
@@ -41,12 +40,7 @@
 			<p>
 				<a th:href="@{/students/studentList}" class="button">Return Student List Page</a>
 			</p>
-			
-
 		</div>
-
-
-
 	</form>
 
 </body>

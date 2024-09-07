@@ -5,6 +5,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Student Info List</title>
+	<script src="/js/student-list.js"></script>
 	<link rel="stylesheet" href="/css/style.css">
 </head>
 
@@ -41,59 +42,59 @@
 
 
 	<form th:action="@{/students/deleteSelectedStudents}" method="POST">
-		
-<!--		<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>-->
-
 		<button type="submit" class="delete_button">Delete Selected Students</button>
 
 		<table class="header">
 			<thead>
 				<tr>
-					<th>Check</th>
+					<th><input type="checkbox" class="student_checkbox" onclick="toggleSelection(this)"> Select All</th>
 					<th>Student No</th>
 					<th>First Name</th>
 					<th>Last Name</th>
-					<th>Email</th>
-					<th>Created At</th>
+					<th>View Student Details</th>
 					<th>Action</th>
 				</tr>
 			</thead>
-
 			<tbody>
-
 				<tr th:each="tempStudent : ${student}">
-
-					<td><input type="checkbox" name="studentIds" th:value="${tempStudent.id}" /></td>
-
-					<td th:text="${tempStudent.id}" />
-
-					<td th:text="${tempStudent.firstName}" />
-					<td th:text="${tempStudent.lastName}" />
-					<td th:text="${tempStudent.email}" />
-
-					<!--				Using thymeleaf - format in frontend-->
-					<!--				<td th:text="${tempStudent.createdAt != null -->
-					<!--							? tempStudent.createdAt.format(T(java.time.format.DateTimeFormatter).ofPattern('yyyy-MM-dd')) -->
-					<!--							: 'Not Available'}"/>-->
-
-					<!--				<td>-->
-
-					<td th:text="${tempStudent.formattedCreatedAt}" />
-
+					<td><input type="checkbox" name="studentIds[]" th:value="${tempStudent.id}"
+							class="student_checkbox" /></td>
+					<td th:text="${tempStudent.id}"></td>
+					<td th:text="${tempStudent.firstName}"></td>
+					<td th:text="${tempStudent.lastName}"></td>
+					<td><a th:href="@{/students/findById(studentId=${tempStudent.id})}">View Details</a></td>
 					<td>
-
 						<a th:href="@{/students/update(studentId=${tempStudent.id})}" class="button">Update</a>
-
-						<a th:href="@{/students/delete(studentId=${tempStudent.id})}" class="delete_button"
+						<a th:href="@{/students/delete(studentId=${tempStudent.id})}" class="action_delete"
 							onclick="return confirm('Are you sure you want to delete this student?')">Delete</a>
-
 					</td>
 				</tr>
-
 			</tbody>
 		</table>
 
+<!--		 Pagination Controls -->
+		<div class="pagination">
+			<ul>
+				 Previous Page Link 
+				<li th:if="${currentPage > 0}">
+					<a th:href="@{/students/studentList(page=${currentPage - 1})}">&laquo; Previous</a>
+				</li>
+
+				 Page Numbers 
+				<li th:each="i : ${#numbers.sequence(0, totalPages == null ? 0 : totalPages - 1)}">
+					<a th:href="@{/students/studentList(page=${i})}" th:text="${i + 1}"
+						th:classappend="${i == currentPage} ? 'active'"></a>
+				</li>
+
+				 Next Page Link 
+				<li th:if="${currentPage < (totalPages == null ? 1 : totalPages - 1)}">
+					<a th:href="@{/students/studentList(page=${currentPage + 1})}">Next &raquo;</a>
+				</li>
+			</ul>
+		</div>
+
 	</form>
+
 
 
 </body>

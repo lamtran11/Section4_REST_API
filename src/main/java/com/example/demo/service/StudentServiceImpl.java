@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.StudentRepository;
@@ -47,7 +49,8 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public Student update(Student student) {
 
-		Optional<Student> result = studentRepository.findById(student.getId());
+		Optional<Student> result = studentRepository.
+									findById(student.getId());
 
 		Student theStudent = null;
 
@@ -55,7 +58,8 @@ public class StudentServiceImpl implements StudentService {
 			theStudent = result.get();
 
 		} else {
-			throw new RuntimeException("The Student does not exist - " + student.getId());
+			throw new RuntimeException("The Student does not exist - " 
+					+ student.getId());
 		}
 
 		return theStudent;
@@ -79,6 +83,20 @@ public class StudentServiceImpl implements StudentService {
 	public void deleteByIds(List<Integer> studentIds) {
         studentRepository.deleteAllById(studentIds);
     }
+
+//	@Override
+//	public Student getStudentByEmail(Student student) {
+//		// TODO 自動生成されたメソッド・スタブ
+//		return null;
+//	}
+
+	@Override
+	public Page<Student> findPaginated(int page, int size) {
+	    PageRequest pageable = PageRequest.of(page, size);
+	    return studentRepository.findAll(pageable);
+	}
+
+
 	
 }
 

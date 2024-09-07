@@ -9,23 +9,20 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.example.demo.validation.ValidationGroups;
-
 @Entity
 @Table(name = "student")
 public class Student {
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
+		
 	@Column(name = "first_name")
 	private String firstName;
 
@@ -39,7 +36,6 @@ public class Student {
 	// => Directly get Id from Database and check for duplicate email validation
 	@Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$", message = "Gmailの形式が正しくない。")
 	@NotNull(message = "このフィルドが必須です。")
-	@Email(message = "Email should be valid", groups = {ValidationGroups.Create.class, ValidationGroups.Update.class})
 	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 

@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -62,24 +63,24 @@ public class StudentController {
 	}
 
 	@PostMapping("/save")
-	public String saveStudent(@Valid @ModelAttribute("student") Student theStudent, BindingResult theBindingResult) {
-		
-	    if (theBindingResult.hasErrors()) {
-	        return "student/student-form";
-	    }
+	public String saveStudent(@Valid @ModelAttribute("student") Student theStudent,
+			BindingResult theBindingResult) {
 
-	    try {
-	        studentService.save(theStudent);
-	        
-	    } catch (DataIntegrityViolationException e) {
-	        // Handle the unique constraint violation
-	        theBindingResult.rejectValue("email", "error.student.email", "This email is already registered.");
-	        return "student/student-form";
-	    }
+		if (theBindingResult.hasErrors()) {
+			return "student/student-form";
+		}
 
-	    return "redirect:/students/studentList";
+		try {
+			studentService.save(theStudent);
+
+		} catch (DataIntegrityViolationException e) {
+			// Handle the unique constraint violation
+			theBindingResult.rejectValue("email", "error.student.email", "This email is already registered.");
+			return "student/student-form";
+		}
+
+		return "redirect:/students/studentList";
 	}
-
 
 	@GetMapping("/update")
 	public String showFormUpdate(@RequestParam("studentId") int theId, Model theModel) {
@@ -101,24 +102,49 @@ public class StudentController {
 
 	@PostMapping("/deleteSelectedStudents")
 	public String deleteSelectedStudents(
-	        @RequestParam(value = "studentIds", required = false) List<Integer> studentIds,
-	        Model model) {
+			@RequestParam(value = "studentIds", required = false) List<Integer> studentIds,
+			Model model) {
 
-	    // Handle the case where no checkboxes are selected
-	    if (studentIds == null || studentIds.isEmpty()) {
-	        model.addAttribute("errorMessage", "No students selected for deletion.");
-	        return "student/studentList"; // Ensure this matches your actual view name
-	        
-	    } else {
-	            
-	    	studentService.deleteByIds(studentIds);
-	      
-	        model.addAttribute("successMessage", "Selected students have been deleted successfully.");
-	        
-		    return "student/studentList"; 
+		// Handle the case where no checkboxes are selected
+		if (studentIds == null || studentIds.isEmpty()) {
+			model.addAttribute("errorMessage", "No students selected for deletion.");
+			return "student/studentList"; // Ensure this matches your actual view name
 
-	    }
+		} else {
+
+			studentService.deleteByIds(studentIds);
+
+			model.addAttribute("successMessage", "Selected students have been deleted successfully.");
+
+			return "student/studentList";
+
+		}
 
 	}
+
+	@GetMapping("/findById")
+	public String getStudentById(@RequestParam("studentId") int theId, Model theModel) {
+
+		Student theStudent = studentService.findById(theId);
+
+		theModel.addAttribute("student", theStudent);
+
+		return "student/student-profile";
+
+	}
+
+
+	@GetMapping("/students/studentList")
+	public String getStudents(@RequestParam(defaultValue = "0") int page, 
+	                          @RequestParam(defaultValue = "10") int size, 
+	                          Model model) {
+		
+	    Page<Student> studentPage = studentService.findPaginated(page, size);
+	    model.addAttribute("students", studentPage.getContent());
+	    model.addAttribute("currentPage", page);
+	    model.addAttribute("totalPages", studentPage.getTotalPages());
+	    return "students";
+	}
+
 
 }
