@@ -12,10 +12,11 @@ public interface StudentService {
 	
 	Student save(Student theStudent);
 	
-	Student update(int theId);
+	Student update(Student student);
 	
 	void deleteById(int theId);
 	
 	boolean emailExists(String email);
 	
+	void deleteByIds(List<Integer> studentIds);
 }

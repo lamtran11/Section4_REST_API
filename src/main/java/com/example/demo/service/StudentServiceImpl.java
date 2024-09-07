@@ -45,20 +45,17 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public Student update(int theId) {
+	public Student update(Student student) {
 
-		Optional<Student> result = studentRepository.findById(theId);
+		Optional<Student> result = studentRepository.findById(student.getId());
 
 		Student theStudent = null;
 
 		if (result.isPresent()) {
 			theStudent = result.get();
-			// Update the student's information
-			// theStudent.setName("Changed Name");
-			// theStudent.setEmail("Changed Email");
 
 		} else {
-			throw new RuntimeException("The Student does not exist");
+			throw new RuntimeException("The Student does not exist - " + student.getId());
 		}
 
 		return theStudent;
@@ -76,7 +73,12 @@ public class StudentServiceImpl implements StudentService {
 		// TODO 自動生成されたメソッド・スタブ
 		return studentRepository.existsByEmail(email);
 	}
+	
 
+	@Override
+	public void deleteByIds(List<Integer> studentIds) {
+        studentRepository.deleteAllById(studentIds);
+    }
 	
 }
 

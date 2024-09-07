@@ -5,6 +5,7 @@ import java.util.List;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,18 +29,17 @@ public class StudentController {
 	public StudentController(StudentService studentService) {
 		this.studentService = studentService;
 	}
-	
+
 	//Add init binder to trim space
 	//Remove white space 
 	@InitBinder
 	public void initBinder(WebDataBinder dataBinder) {
-		
-		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
-		
-		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
-		
-	}
 
+		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+
+		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+
+	}
 
 	@GetMapping("/studentList")
 	public String getStudentList(Model theModel) {
@@ -63,23 +63,23 @@ public class StudentController {
 
 	@PostMapping("/save")
 	public String saveStudent(@Valid @ModelAttribute("student") Student theStudent, BindingResult theBindingResult) {
+		
+	    if (theBindingResult.hasErrors()) {
+	        return "student/student-form";
+	    }
 
-		if (theBindingResult.hasErrors()) {
-			// Return the form view to display the validation errors
-			return "student/student-form";
-		}
+	    try {
+	        studentService.save(theStudent);
+	        
+	    } catch (DataIntegrityViolationException e) {
+	        // Handle the unique constraint violation
+	        theBindingResult.rejectValue("email", "error.student.email", "This email is already registered.");
+	        return "student/student-form";
+	    }
 
-		if (studentService.emailExists(theStudent.getEmail())) {
-
-			theBindingResult.rejectValue("email", "error.student.email", "Emailが重複しました。");
-			return "student/student-form";
-		}
-
-		// Save the student and redirect to the student list
-		studentService.save(theStudent);
-		return "redirect:/students/studentList";
-
+	    return "redirect:/students/studentList";
 	}
+
 
 	@GetMapping("/update")
 	public String showFormUpdate(@RequestParam("studentId") int theId, Model theModel) {
@@ -98,4 +98,27 @@ public class StudentController {
 
 		return "redirect:/students/studentList";
 	}
+
+	@PostMapping("/deleteSelectedStudents")
+	public String deleteSelectedStudents(
+	        @RequestParam(value = "studentIds", required = false) List<Integer> studentIds,
+	        Model model) {
+
+	    // Handle the case where no checkboxes are selected
+	    if (studentIds == null || studentIds.isEmpty()) {
+	        model.addAttribute("errorMessage", "No students selected for deletion.");
+	        return "student/studentList"; // Ensure this matches your actual view name
+	        
+	    } else {
+	            
+	    	studentService.deleteByIds(studentIds);
+	      
+	        model.addAttribute("successMessage", "Selected students have been deleted successfully.");
+	        
+		    return "student/studentList"; 
+
+	    }
+
+	}
+
 }
