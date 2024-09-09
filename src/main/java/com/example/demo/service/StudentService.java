@@ -2,8 +2,6 @@ package com.example.demo.service;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-
 import com.example.demo.entity.Student;
 
 public interface StudentService {
@@ -12,6 +10,10 @@ public interface StudentService {
 	
 	Student findById(int theId);
 	
+//	List<Student> findByLastName(String theLastName);
+//	
+//	List<Student> findByEmail(String email);
+
 	Student save(Student theStudent);
 	
 	Student update(Student student);
@@ -21,9 +23,25 @@ public interface StudentService {
 	boolean emailExists(String email);
 	
 	void deleteByIds(List<Integer> studentIds);
-	
-//	Student getStudentByEmail(Student student);
-	
-    Page<Student> findPaginated(int page, int size);
+		
+//    Page<Student> findPaginated(int page, int size);
 
+	
+//	List<Student> saveAll(List<Student> students);
+//	
+//	
+//	Iterable<Student> getAllStudents(Integer pageSize, Integer offset);
+	
+//	Page<Student> findPaginated(int pageNo, int pageSize);
+	
+//	List<Student> findByLastNameContainingAndEmailContaining(String lastName, String email);
+	
+	List<Student> findByLastNameContainingIgnoreCase(String lastName);
+
+	// Method to find students by email
+	List<Student> findByEmailContainingIgnoreCase(String email);
+
+	// Method to find students by last name or email
+	List<Student> findByLastNameContainingIgnoreCaseOrEmailContainingIgnoreCase(String lastName, String email);
+	
 }

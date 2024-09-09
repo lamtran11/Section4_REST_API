@@ -51,9 +51,17 @@ th, td {
 	border: 1px solid #ddd;
 }
 
+th, td:last-child {
+	text-align: center;
+}
+
 tbody {
 	padding: 12px 15px;
 	border: 1px solid #ddd;
+}
+
+hidden {
+	display: none;
 }
 
 .button {

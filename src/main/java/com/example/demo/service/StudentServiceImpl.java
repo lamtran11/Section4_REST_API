@@ -1,11 +1,10 @@
 package com.example.demo.service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.StudentRepository;
@@ -45,6 +44,12 @@ public class StudentServiceImpl implements StudentService {
 
 		return studentRepository.save(theStudent);
 	}
+	
+//	@Override
+//	public List<Student> saveAll(List<Student> students) {
+//		// TODO 自動生成されたメソッド・スタブ
+//		return studentRepository.saveAll(students);
+//	}
 
 	@Override
 	public Student update(Student student) {
@@ -85,18 +90,56 @@ public class StudentServiceImpl implements StudentService {
     }
 
 //	@Override
+//	public Iterable<Student> getAllStudents(Integer pageSize, Integer offset) {
+//		// TODO 自動生成されたメソッド・スタブ
+//		return studentRepository.findAll(PageRequest.of(offset, pageSize));
+//	}
+
+
+//	@Override
 //	public Student getStudentByEmail(Student student) {
 //		// TODO 自動生成されたメソッド・スタブ
 //		return null;
 //	}
 
+//	@Override
+//    public Page<Student> findPaginated(int page, int size) {
+//        PageRequest pageable = PageRequest.of(page, size);
+//        return studentRepository.findAll(pageable);
+//    }
+
 	@Override
-	public Page<Student> findPaginated(int page, int size) {
-	    PageRequest pageable = PageRequest.of(page, size);
-	    return studentRepository.findAll(pageable);
-	}
+    public List<Student> findByLastNameContainingIgnoreCase(String theLastName) {
+        // Handle null or empty last name
+        if (theLastName == null || theLastName.trim().isEmpty()) {
+            return Collections.emptyList(); // or return all students if needed
+        }
 
+        return studentRepository.findByLastNameContainingIgnoreCase(theLastName);
+    }
 
+    @Override
+    public List<Student> findByEmailContainingIgnoreCase(String email) {
+        // Handle null or empty email
+        if (email == null || email.trim().isEmpty()) {
+            return Collections.emptyList(); // or return all students if needed
+        }
+
+        return studentRepository.findByEmailContainingIgnoreCase(email);
+    }
+
+    @Override
+    public List<Student> findByLastNameContainingIgnoreCaseOrEmailContainingIgnoreCase(String lastName, String email) {
+        // Handle null or empty last name and email
+        if ((lastName == null || lastName.trim().isEmpty()) &&
+            (email == null || email.trim().isEmpty())) {
+            return Collections.emptyList(); // or return all students if needed
+        }
+
+        return studentRepository.findByLastNameContainingIgnoreCaseOrEmailContainingIgnoreCase(lastName, email);
+    }
+
+    	
 	
 }
 

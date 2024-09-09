@@ -52,8 +52,6 @@ public class SecurityConfig {
 		return jdbcUserDetailsManager;
 	}
 	
-	
-
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
