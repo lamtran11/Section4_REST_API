@@ -1,0 +1,30 @@
+
+/* Default styles */
+h1 {
+    font-size: 2rem;
+}
+
+p {
+    font-size: 1rem;
+}
+
+.container {
+    background-color: #f0f0f0;
+    padding: 1em;
+}
+
+/* Media query for screen widths of 80rem or more */
+@media screen and (min-width: 40rem) { /* Temporary change for testing */
+    .container {
+        margin: 2em 3em;
+        background-color: #2cce2c;
+    }
+
+    h1 {
+        font-size: 3rem;
+    }
+
+    p {
+        font-size: 2rem;
+    }
+}

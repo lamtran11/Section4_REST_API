@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Grid Layout</title>
+    <style>
+        .container {
+            display: grid;
+            gap: 2em; /* Space between grid items */
+            grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); /* Responsive columns */
+            padding: 1em;
+        }
+
+        /* 
+        Auto-fill: Fill as much as possible item in one row
+        minmax(15rem, 1fr): Sets a minimum column width of 15rem and allows columns to grow to fill available space (1fr).
+        */
+
+        .item {
+            background-color: #f0f0f0;
+            padding: 1em;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="item">Item 1: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
+        <div class="item">Item 2: Curabitur faucibus est vel lacus faucibus, vel bibendum lorem feugiat.</div>
+        <div class="item">Item 3: Phasellus vehicula lacus vel tincidunt sodales. Maecenas pretium felis eget justo.</div>
+        <div class="item">Item 4: Mauris in lacus vitae leo convallis feugiat ut at est. Pellentesque ultricies ipsum.</div>
+        <div class="item">Item 5: Fusce tincidunt nisi id ante facilisis, non commodo nisl vehicula.</div>
+        <div class="item">Item 6: Aliquam erat volutpat. Donec non leo auctor, cursus erat non, ultrices quam.</div>
+    </div>
+
+</body>
+</html>

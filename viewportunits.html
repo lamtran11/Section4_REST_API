@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viewport Units Layout</title>
+    <style>
+        /* Full viewport height container */
+        .container {
+            width: 100vw; /* Full viewport width */
+            height: 100vh; /* Full viewport height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center content vertically */
+            align-items: center; /* Center content horizontally */
+            padding: 2vw; /* Padding around the container */
+            box-sizing: border-box; 
+            /*
+            The width and height you specify include the padding and border.
+            This makes it easier to control the total size of an element, as the padding and border 
+            are included within the specified dimensions. 
+             */
+            background-color: #f0f0f0;
+        }
+
+        /* Item styling */
+        .item {
+            width: 40vw; /* 40% of viewport width */
+            height: 20vh; /* 20% of viewport height */
+            background-color: #c5e3c5;
+            color: white;
+            display: flex;
+            justify-content: center; /* Center text horizontally */
+            align-items: center; /* Center text vertically */
+            font-size: 2vw; /* Font size based on viewport width */
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="item">Item 1</div>
+        <div class="item">Item 2</div>
+        <div class="item">Item 3</div>
+        <div class="item">Item 4</div>
+    </div>
+
+</body>
+</html>
