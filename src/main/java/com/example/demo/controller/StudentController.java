@@ -1,17 +1,12 @@
 package com.example.demo.controller;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.util.List;
 
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.Student;
-import com.example.demo.service.PdfService;
 import com.example.demo.service.StudentService;
 
 @Controller
@@ -34,8 +28,8 @@ public class StudentController {
 	@Autowired
 	private StudentService studentService;
 	
-	 @Autowired
-	 private PdfService pdfService;
+//	 @Autowired
+//	 private PdfService pdfService;
 
 	public StudentController(StudentService studentService) {
 		this.studentService = studentService;
@@ -168,7 +162,6 @@ public class StudentController {
 			return "student/studentList";
 
 		}
-
 	}
 
 	@GetMapping("/getStudentProfile")
@@ -182,57 +175,20 @@ public class StudentController {
 
 	}
 	
-	@GetMapping("/exportFormStudent")
-    public HttpEntity<InputStreamResource> exportStudentToPdf(@RequestParam("studentId") int studentId) throws IOException {
-        Student student = studentService.findById(studentId);
-        
-//        if (student == null) {
-//            return new HttpEntity<>(HttpStatus.NOT_FOUND);
-//        }
-
-        ByteArrayInputStream bis = pdfService.generateStudentPdf(student);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "inline; filename=student_" + studentId + ".pdf");
-
-        return new HttpEntity<>(new InputStreamResource(bis), headers);
-    }
-
-	//	@GetMapping("/students/studentList")
-	//	public String getStudents(@RequestParam(defaultValue = "0") int page, 
-	//	                          @RequestParam(defaultValue = "10") int size, 
-	//	                          Model model) {
-	//		
-	//	    Page<Student> studentPage = studentService.findPaginated(page, size);
-	//	    model.addAttribute("students", studentPage.getContent());
-	//	    model.addAttribute("currentPage", page);
-	//	    model.addAttribute("totalPages", studentPage.getTotalPages());
-	//	    return "students";
-	//	}
-
-	//	@PostConstruct
-	//	public void createStudents() {
-	//		
-	//		List<Student> students = new ArrayList<Student>();
-	//		
-	//		for (int i = 0; i < 100; i++) {
-	//			
-	//			Student theStudent = new Student();
-	//			
-	//			theStudent.setId(i);
-	//			theStudent.setFirstName("Fristname + " + i);
-	//			theStudent.setLastName("Lastname + " + i);
-	//			
-	//			students.add(theStudent);
-	//			
-	//		}
-	//		studentService.saveAll(students);
-	//	}
-	//	
-	//	@GetMapping("/getAll/{offset}")
-	//	public Iterable<Student> getAllStudents(@RequestParam Integer pageSize, @PathVariable("offset") Integer offset) {
-	//		
-	//		return studentService.getAllStudents(pageSize, offset);
-	//	}
+//	@GetMapping("/exportFormStudent")
+//    public HttpEntity<InputStreamResource> exportStudentToPdf(@RequestParam("studentId") int studentId) throws IOException {
+//        Student student = studentService.findById(studentId);
+//        
+////        if (student == null) {
+////            return new HttpEntity<>(HttpStatus.NOT_FOUND);
+////        }
+//
+//        ByteArrayInputStream bis = pdfService.generateStudentPdf(student);
+//
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.add("Content-Disposition", "inline; filename=student_" + studentId + ".pdf");
+//
+//        return new HttpEntity<>(new InputStreamResource(bis), headers);
+//    }
 
 }
