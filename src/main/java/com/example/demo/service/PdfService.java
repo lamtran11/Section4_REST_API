@@ -1,58 +1,93 @@
-//package com.example.demo.service;
-//
-//import java.io.ByteArrayInputStream;
-//import java.io.ByteArrayOutputStream;
-//import java.io.File;
-//import java.io.IOException;
-//
-//import org.apache.pdfbox.pdmodel.PDDocument;
-//import org.apache.pdfbox.pdmodel.PDPage;
-//import org.apache.pdfbox.pdmodel.PDPageContentStream;
-//import org.apache.pdfbox.pdmodel.font.PDType0Font;
-//import org.springframework.stereotype.Service;
-//
-//import com.example.demo.entity.Student;
-//
-//@Service
-//public class PdfService {
-//
-//    public ByteArrayInputStream generateStudentPdf(Student student) throws IOException {
-//        ByteArrayOutputStream out = new ByteArrayOutputStream();
-//
-//        try (PDDocument document = new PDDocument()) {
-//            PDPage page = new PDPage();
-//            document.addPage(page);
-//
-//            // Load the custom font (Noto Sans or any Unicode font)
-//            File fontFile = new File("src/main/resources/fonts/NotoSansJP-Regular.otf");
-//            PDType0Font font = PDType0Font.load(document, fontFile);
-//
-//            PDPageContentStream contentStream = new PDPageContentStream(document, page);
-//
-//            contentStream.beginText();
-//            contentStream.setFont(font, 18);
-//            contentStream.setLeading(14.5f);
-//            contentStream.newLineAtOffset(50, 750);
-//            contentStream.showText("Student Details");
-//            contentStream.newLine();
-//            contentStream.setFont(font, 12);
-//            contentStream.newLine();
-//
-//            contentStream.showText("ID: " + student.getId());
-//            contentStream.newLine();
-//            contentStream.showText("First Name: " + student.getFirstName());
-//            contentStream.newLine();
-//            contentStream.showText("Last Name: " + student.getLastName());
-//            contentStream.newLine();
-//            contentStream.showText("Email: " + student.getEmail());
-//            contentStream.newLine();
-//
-//            contentStream.endText();
-//            contentStream.close();
-//
-//            document.save(out);
-//        }
-//
-//        return new ByteArrayInputStream(out.toByteArray());
-//    }
-//}
+package com.example.demo.service;
+
+import java.awt.Color;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.util.List;
+import java.util.stream.Stream;
+
+import org.springframework.stereotype.Service;
+
+import com.example.demo.entity.Student;
+import com.lowagie.text.Chunk;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Element;
+import com.lowagie.text.Font;
+import com.lowagie.text.FontFactory;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.pdf.BaseFont;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
+
+@Service
+public class PdfService {
+
+    public static ByteArrayInputStream studentPDFReport(List<Student> students) {
+        Document document = new Document();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+        try {
+            PdfWriter.getInstance(document, out);
+            document.open();
+
+            // Load the Japanese font
+            Font japaneseFont = FontFactory.getFont("src/main/resources/fonts/MSMINCHO.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 12);
+
+            // Add Content to PDF with Japanese Font
+//            Font fontHeader = new Font(japaneseFont, 22, Font.BOLD);
+            Font fontHeader = FontFactory.getFont(FontFactory.TIMES_BOLD, 22);
+
+            Paragraph para = new Paragraph("学生リスト", fontHeader);  // "学生リスト" means "Student List" in Japanese
+            para.setAlignment(Element.ALIGN_CENTER);
+            document.add(para);
+            document.add(Chunk.NEWLINE);
+
+            PdfPTable table = new PdfPTable(4);
+            Stream.of("ID", "名", "姓", "メール").forEach(headerTitle -> {
+                PdfPCell header = new PdfPCell();
+                header.setBackgroundColor(Color.CYAN);
+                header.setHorizontalAlignment(Element.ALIGN_CENTER);
+                header.setBorderWidth(2);
+                header.setPhrase(new Phrase(headerTitle, japaneseFont));
+                table.addCell(header);
+            });
+
+            for (Student student : students) {
+                PdfPCell idCell = new PdfPCell(new Phrase(String.valueOf(student.getId()), japaneseFont));
+                idCell.setPaddingLeft(4);
+                idCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                idCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(idCell);
+
+                PdfPCell firstNameCell = new PdfPCell(new Phrase(student.getFirstName(), japaneseFont));
+                firstNameCell.setPaddingLeft(4);
+                firstNameCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                firstNameCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                table.addCell(firstNameCell);
+
+                PdfPCell lastNameCell = new PdfPCell(new Phrase(student.getLastName(), japaneseFont));
+                lastNameCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                lastNameCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                lastNameCell.setPaddingRight(4);
+                table.addCell(lastNameCell);
+
+                PdfPCell emailCell = new PdfPCell(new Phrase(student.getEmail(), japaneseFont));
+                emailCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                emailCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                emailCell.setPaddingRight(4);
+                table.addCell(emailCell);
+            }
+
+            document.add(table);
+            document.close();
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
+
+        return new ByteArrayInputStream(out.toByteArray());
+    }
+}
+

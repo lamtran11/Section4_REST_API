@@ -1,12 +1,18 @@
 package com.example.demo.controller;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.List;
 
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.entity.Student;
+import com.example.demo.service.PdfService;
 import com.example.demo.service.StudentService;
 
 @Controller
@@ -27,9 +34,9 @@ public class StudentController {
 
 	@Autowired
 	private StudentService studentService;
-	
-//	 @Autowired
-//	 private PdfService pdfService;
+
+	//	 @Autowired
+	//	 private PdfService pdfService;
 
 	public StudentController(StudentService studentService) {
 		this.studentService = studentService;
@@ -58,20 +65,21 @@ public class StudentController {
 
 	@GetMapping("/filterStudents")
 	public String getStudentList(
-		    @RequestParam(defaultValue = "") String lastName,
-		    @RequestParam(defaultValue = "") String email,
-		    Model theModel) {
+			@RequestParam(defaultValue = "") String lastName,
+			@RequestParam(defaultValue = "") String email,
+			Model theModel) {
 
-		    // Call the service to get the filtered list based on the search criteria
-		    List<Student> studentList = studentService.findByLastNameContainingIgnoreCaseOrEmailContainingIgnoreCase(lastName, email);
+		// Call the service to get the filtered list based on the search criteria
+		List<Student> studentList = studentService
+				.findByLastNameContainingIgnoreCaseOrEmailContainingIgnoreCase(lastName, email);
 
-		    // Add the attributes to the model
-		    theModel.addAttribute("students", studentList);
-		    theModel.addAttribute("searchLastName", lastName);
-		    theModel.addAttribute("searchEmail", email);
+		// Add the attributes to the model
+		theModel.addAttribute("students", studentList);
+		theModel.addAttribute("searchLastName", lastName);
+		theModel.addAttribute("searchEmail", email);
 
-		    return "student/studentList";
-		}
+		return "student/studentList";
+	}
 	//	
 	//	@GetMapping("/studentList")
 	//	public String getStudentList(Model theModel, 
@@ -174,21 +182,45 @@ public class StudentController {
 		return "student/student-profile";
 
 	}
-	
-//	@GetMapping("/exportFormStudent")
-//    public HttpEntity<InputStreamResource> exportStudentToPdf(@RequestParam("studentId") int studentId) throws IOException {
-//        Student student = studentService.findById(studentId);
-//        
-////        if (student == null) {
-////            return new HttpEntity<>(HttpStatus.NOT_FOUND);
-////        }
-//
-//        ByteArrayInputStream bis = pdfService.generateStudentPdf(student);
-//
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.add("Content-Disposition", "inline; filename=student_" + studentId + ".pdf");
-//
-//        return new HttpEntity<>(new InputStreamResource(bis), headers);
-//    }
+
+	//	@GetMapping("/exportFormStudent")
+	//    public HttpEntity<InputStreamResource> exportStudentToPdf(@RequestParam("studentId") int studentId) throws IOException {
+	//        Student student = studentService.findById(studentId);
+	//        
+	////        if (student == null) {
+	////            return new HttpEntity<>(HttpStatus.NOT_FOUND);
+	////        }
+	//
+	//        ByteArrayInputStream bis = pdfService.generateStudentPdf(student);
+	//
+	//        HttpHeaders headers = new HttpHeaders();
+	//        headers.add("Content-Disposition", "inline; filename=student_" + studentId + ".pdf");
+	//
+	//        return new HttpEntity<>(new InputStreamResource(bis), headers);
+	//    }
+
+	@GetMapping(value = "/openpdf/students", produces = MediaType.APPLICATION_PDF_VALUE)
+	public ResponseEntity<InputStreamResource> employeeReport() throws IOException {
+		List<Student> student = studentService.findAll();
+
+		ByteArrayInputStream bis = PdfService.studentPDFReport(student);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "inline; filename=student.pdf");
+
+		return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF)
+				.body(new InputStreamResource(bis));
+	}
 
 }
+
+
+
+
+
+
+
+
+
+
+

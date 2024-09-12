@@ -37,6 +37,8 @@
 
 	<a th:href="@{/students/add}" class="button">Add New Student</a>
 	
+	<a th:href="@{/students/openpdf/students}" class="button">Export From</a>		
+	
 <!--	<form>-->
 <!--		<p>-->
 <!--			<input type="text" onkeyup="filterTable()" placeholder="Search by student id" />-->
@@ -81,7 +83,7 @@
 						<a th:href="@{/students/delete(studentId=${tempStudent.id})}" class="action_delete"
 							onclick="return confirm('Are you sure you want to delete this student?')">Delete</a>
 							
-						<a th:href="@{/students/exportFormStudent(studentId=${tempStudent.id})}" class="button">Export From</a>		
+<!--						<a th:href="@{/students/exportFormStudent(studentId=${tempStudent.id})}" class="button">Export From</a>		-->
 					</td>
 				</tr>
 			</tbody>
