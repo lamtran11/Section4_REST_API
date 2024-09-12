@@ -25,10 +25,25 @@ public class SpringMvcHibernateAdvancedMappingApplication {
 		
 //		findInstructor(appDAO);
 		
-		deleteInstructor(appDAO);
+//		deleteInstructor(appDAO);
+		
+		findInstructorById(appDAO);
 		
 	}
 
+	//bi-directional mapping
+	private void findInstructorById(AppDAO appDAO) {
+		
+		int theId = 2;
+		
+		InstructorDetail tempInstructorDetail = appDAO.findInstructorDetailById(theId);
+		
+		System.out.println("Found Instructor: " + tempInstructorDetail);
+		
+		System.out.print("Associate Instructor: " + tempInstructorDetail.getInstructor());
+	}
+
+	//unidirectional mapping
 	private void deleteInstructor(AppDAO appDAO) {
 		int theId = 3;
 
@@ -39,6 +54,7 @@ public class SpringMvcHibernateAdvancedMappingApplication {
 		System.out.println("Deleted!");
 	}
 
+	//unidirectional mapping
 	private void findInstructor(AppDAO appDAO) {
 		
 		int theId = 4;

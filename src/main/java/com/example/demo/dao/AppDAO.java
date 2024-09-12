@@ -1,6 +1,7 @@
 package com.example.demo.dao;
 
 import com.example.demo.entity.Instructor;
+import com.example.demo.entity.InstructorDetail;
 
 public interface AppDAO {
 	
@@ -9,5 +10,7 @@ public interface AppDAO {
 	Instructor findInstructorById(int id);
 	
 	void deleteInstructor(int id);
+	
+	InstructorDetail findInstructorDetailById(int id);
 	
 }

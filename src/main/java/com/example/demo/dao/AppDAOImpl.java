@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.entity.Instructor;
+import com.example.demo.entity.InstructorDetail;
 
 @Repository
 public class AppDAOImpl implements AppDAO {
@@ -46,6 +47,13 @@ public class AppDAOImpl implements AppDAO {
         	System.out.println("Instructor not found for delete with id: " + id);
         }
 		
+	}
+
+
+	@Override
+	public InstructorDetail findInstructorDetailById(int id) {
+		
+		return entityManager.find(InstructorDetail.class, id);
 	}
 	
 }
