@@ -1,13 +1,24 @@
 package com.example.springCrudDemo.rest;
 
-import com.example.springCrudDemo.entity.Employee;
-import com.example.springCrudDemo.service.EmployeeService;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.springCrudDemo.entity.Employee;
+import com.example.springCrudDemo.service.EmployeeService;
+
+
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/employees")
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 public class EmployeeRestController {
 
 //    private EmployeeDAO employeeDao;
@@ -87,7 +98,6 @@ public class EmployeeRestController {
         return "Delete employee id - " + employeeId;
     }
 }
-
 
 
 
