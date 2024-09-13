@@ -1,0 +1,42 @@
+/* styles.css */
+button.delete-button {
+    background-color: #ff4c4c; /* Red background */
+    color: white; /* White text */
+    border: none; /* Remove border */
+    padding: 10px 15px; /* Add padding */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 16px; /* Font size */
+}
+
+button.delete-button:hover {
+    background-color: #ff0000; /* Darker red on hover */
+}
+
+button.delete-button:focus {
+    outline: none; /* Remove focus outline */
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+th {
+    background-color: #f2f2f2;
+    text-align: center;
+}
+
+td {
+    text-align: center;
+}
+
+.empty-cell {
+    color: #bbb;
+    font-style: italic;
+}
