@@ -1,30 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" 
-    content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Employee List</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <h1>Employee List</h1>
-    <table id="employeeTable">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody id="employeeTableBody">
-            <!-- Employee data will be dynamically inserted here -->
-        </tbody>
-        
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h2>Employee List</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="employeeTableBody">
+        <!-- Employee data will be loaded here dynamically -->
+      </tbody>
     </table>
 
+    <!-- Button to show form for adding new employee -->
+    <button id="showFormBtn">Add New Employee</button>
+
+    <!-- Form to add new employee -->
+    <div class="form-container" id="formContainer">
+      <h3>Add New Employee</h3>
+      <form id="addStudentForm">
+        <label for="firstName">First Name:</label>
+        <input
+          type="text"
+          id="firstName"
+          name="firstName"
+          required
+        /><br /><br />
+
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required /><br /><br />
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required /><br /><br />
+
+        <button type="submit">Add Employee</button>
+      </form>
+    </div>
+
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
