@@ -1,11 +1,13 @@
 package com.example.springCrudDemo.service;
 
-import com.example.springCrudDemo.dao.EmployeeRepository;
-import com.example.springCrudDemo.entity.Employee;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.springCrudDemo.dao.EmployeeRepository;
+import com.example.springCrudDemo.entity.Employee;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -49,6 +51,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		// TODO 自動生成されたメソッド・スタブ
 		employeeRepository.deleteById(theId);
 	}
+
+	
 }
 
 
