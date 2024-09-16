@@ -23,12 +23,10 @@
       </tbody>
     </table>
 
-    <!-- Button to show form for adding new employee -->
-    <button id="showFormBtn">Add New Employee</button>
-
-    <!-- Form to add new employee -->
     <div class="form-container" id="formContainer">
+
       <h3>Add New Employee</h3>
+
       <form id="addStudentForm">
         <label for="firstName">First Name:</label>
         <input
@@ -37,7 +35,7 @@
           name="firstName"
           required
         /><br /><br />
-
+        
         <label for="lastName">Last Name:</label>
         <input type="text" id="lastName" name="lastName" required /><br /><br />
 
@@ -46,7 +44,18 @@
 
         <button type="submit">Add Employee</button>
       </form>
+
+      <a href="../index.html">
+        <button type="button">Back To Student Page</button>
+      </a>
+
     </div>
+
+
+     <!-- Button to navigate to form page for adding new employee -->
+     <a href="/form/student-form.html" id="showFormBtn">
+      <button>Add New Employee</button>
+    </a>
 
     <script src="script.js"></script>
   </body>

@@ -111,49 +111,72 @@ async function fetchEmployees() {
   }
 }
 
+// Function to load the form from another file and insert it into the page
+document.getElementById('showFormBtn').addEventListener('click', async function () {
+  
+    // Fetch the HTML form from the external file
+    try {
+      const response = await fetch('/form/student-form.html');
+      const formHtml = await response.text();
+  
+      // Add event listener to handle form submission after the form is loaded
+      document.getElementById('addStudentForm').addEventListener('submit', addEmployee);
+    } catch (error) {
+      console.error('Error loading the form:', error);
+    }
+  });
+
 // Function to add a new employee
 async function addEmployee(event) {
-  event.preventDefault();
+    event.preventDefault();
+    console.log('Add Employee function triggered'); // Debugging
 
-  const formData = new FormData(document.getElementById('addStudentForm'));
-  const employee = {
-    firstName: formData.get('firstName'),
-    lastName: formData.get('lastName'),
-    email: formData.get('email'),
-  };
+    const formData = new FormData(document.getElementById('addStudentForm'));
+    const employee = {
+        firstName: formData.get('firstName'),
+        lastName: formData.get('lastName'),
+        email: formData.get('email')
+    };
 
-  try {
-    const response = await fetch('http://localhost:8080/api/add', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(employee),
-    });
+    console.log('Employee Data:', employee); // Debugging
 
-    if (response.ok) {
-      alert('Employee added successfully.');
-      fetchEmployees();
-    } else {
-      alert('Failed to add the employee.');
+    try {
+        const response = await fetch('http://localhost:8080/api/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(employee)
+        });
+
+        if (response.ok) {
+            alert('Employee added successfully.');
+        } else {
+            alert('Failed to add the employee.');
+            console.log('Response:', await response.text()); // Debugging
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while adding the employee.');
     }
-  } catch (error) {
-    console.error('Error:', error);
-    alert('An error occurred while adding the employee.');
-  }
 }
 
-// Function to show/hide the form for adding a new employee
-document.getElementById('showFormBtn').addEventListener('click', function () {
-  const formContainer = document.getElementById('formContainer');
-  formContainer.style.display =
-    formContainer.style.display === 'none' ? 'block' : 'none';
-});
+
+
+// // Function to show/hide the form for adding a new employee
+// document.getElementById('showFormBtn').addEventListener('click', function () {
+
+//   const formContainer = document.getElementById('formContainer');
+
+//   formContainer.style.display =
+//     formContainer.style.display === 'none' ? 'block' : 'none';
+// });
 
 // Add event listener for form submission
 document
   .getElementById('addStudentForm')
   .addEventListener('submit', addEmployee);
+
 
 // Load employees on page load
 window.onload = fetchEmployees;
