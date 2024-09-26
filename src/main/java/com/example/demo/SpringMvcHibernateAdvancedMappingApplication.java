@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import com.example.demo.dao.AppDAO;
+import com.example.demo.entity.Course;
 import com.example.demo.entity.Instructor;
 import com.example.demo.entity.InstructorDetail;
 
@@ -27,14 +28,65 @@ public class SpringMvcHibernateAdvancedMappingApplication {
 		
 //		deleteInstructor(appDAO);
 		
-		findInstructorById(appDAO);
+//		findInstructorById(appDAO);
+
+//		deleteInstructorDetail(appDAO);
 		
+//		createInstructorWithCourses(appDAO);
+		
+		findInstructorWithCourses(appDAO);
+
+	}
+
+	private void findInstructorWithCourses(AppDAO appDAO) {
+		// TODO 自動生成されたメソッド・スタブ
+		int theId  = 1;
+		
+		Instructor tempInstructor = appDAO.findInstructorById(theId);
+		
+		System.out.println("tempInstructor: " + tempInstructor);
+		System.out.println("Associate course: " + tempInstructor.getCourse());
+
+	}
+
+	private void createInstructorWithCourses(AppDAO appDAO) {
+		// TODO 自動生成されたメソッド・スタブ
+		
+		Instructor tempInstructor = new Instructor("takuto", "hayashi", "takuto@gmail.com");
+		
+		InstructorDetail theInstructDetail = new InstructorDetail("https://www.javatpoint.com/java-tutorial"
+                                                        , "Learning Piano");
+		
+		tempInstructor.setInstructorDetail(theInstructDetail);
+		
+		Course tempCourse1 = new Course("Japanese");
+		Course tempCourse2 = new Course("Maththematic");
+		Course tempCourse3 = new Course("Java");
+		
+		 tempInstructor.add(tempCourse1);
+		 tempInstructor.add(tempCourse2);
+		 tempInstructor.add(tempCourse3);
+		 
+		 
+		 System.out.println("Saving instructors " + tempInstructor);
+		 System.out.println("The courses: " + tempInstructor.getCourse());
+		 appDAO.save(tempInstructor);
+	
+	}
+
+	private void deleteInstructorDetail(AppDAO appDAO) {
+
+		int theId = 4;
+//		System.out.println("Deleting " + theId);
+
+		appDAO.deleteInstructorDetailById(theId);
+
 	}
 
 	//bi-directional mapping
 	private void findInstructorById(AppDAO appDAO) {
 		
-		int theId = 2;
+		int theId = 7;
 		
 		InstructorDetail tempInstructorDetail = appDAO.findInstructorDetailById(theId);
 		

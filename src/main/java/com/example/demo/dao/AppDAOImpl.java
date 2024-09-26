@@ -55,7 +55,29 @@ public class AppDAOImpl implements AppDAO {
 		
 		return entityManager.find(InstructorDetail.class, id);
 	}
-	
+
+	@Override
+	@Transactional
+	public void deleteInstructorDetailById(int id) {
+
+		//retrieve instructor in dbs
+		InstructorDetail tempInstructorDetail = entityManager.find(InstructorDetail.class, id);
+
+		//remove associated object reference
+		//break bi-directional link
+		tempInstructorDetail.getInstructor().setInstructorDetail(null);
+
+
+		//remove by id
+		//Này setup cascade rồi so it will delete in both tables
+		if(tempInstructorDetail != null) {
+            entityManager.remove(tempInstructorDetail);
+			System.out.println("Instructor Detail deleted successfully with id: " + id);
+        } else {
+            System.out.println("Instructor Detail not found for delete with id: " + id);
+        }
+	}
+
 }
 
 
