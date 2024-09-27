@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import java.util.List;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -34,13 +36,120 @@ public class SpringMvcHibernateAdvancedMappingApplication {
 		
 //		createInstructorWithCourses(appDAO);
 		
-		findInstructorWithCourses(appDAO);
+//		findInstructorWithCourses(appDAO);
+		
+//		findCoursesForInstructor(appDAO);
+		
+//		findInstuctorByIdJoinFetch(appDAO);
+		
+//		updateInstructor(appDAO);
+		
+//		updateCourse(appDAO);
+		
+		//oneTOMany
+		deleteInstructorById(appDAO);
 
+	}
+
+	private void deleteInstructorById(AppDAO appDAO) {
+		int theId = 2;
+		
+        System.out.println("Deleting instructor id: " + theId + ".....");
+        
+        appDAO.deleteInstructorById(theId);
+        
+        System.out.println("Instructor deleted successfully!");
+	}
+
+	private void updateCourse(AppDAO appDAO) {
+		// TODO 自動生成されたメソッド・スタブ
+		int theId = 25;
+		
+		System.out.println("Finding course id: " + theId + ".....");
+        Course tempCourse = appDAO.findCourseById(theId);
+        
+        if(tempCourse!= null) {
+                
+            System.out.println("Updating course details..." + theId);
+            
+            tempCourse.setTitle("C#");
+            
+            appDAO.update(tempCourse);
+            
+            System.out.println("Course updated successfully!");
+            
+        } else {
+            System.out.println("Course not found with id: " + theId);
+        }
+		
+	}
+
+	private void updateInstructor(AppDAO appDAO) {
+		
+		int theId = 1;
+		
+		System.out.println("Finding instructor id: " + theId);
+        Instructor tempInstructor = appDAO.findInstructorById(theId);
+        
+        if(tempInstructor!= null) {
+        		
+            System.out.println("Updating instructor details..." + theId);
+            
+            tempInstructor.setFirstName("Muichiro");
+            
+            appDAO.update(tempInstructor);
+            
+            System.out.println("Instructor updated successfully!")
+            ;
+        } else {
+        	System.out.println("Instructor not found with id: " + theId);
+        }
+		
+	}
+
+	private void findInstuctorByIdJoinFetch(AppDAO appDAO) {
+		
+		int theId  = 1;
+		
+		System.out.println("Finding instructor id: " + theId);
+		
+        Instructor tempInstructor = appDAO.findInstuctorByIdJoinFetch(theId);
+        
+        System.out.println("tempInstructor: " + tempInstructor);
+        
+        //find courses for the instructor
+        System.out.println("Find courses for the instructor");   
+        System.out.println("Course: " + tempInstructor.getCourse());
+        
+        System.out.println("Done!!!!");
+        
+	}
+
+	private void findCoursesForInstructor(AppDAO appDAO) {
+		int theId  = 1;
+		
+		System.out.println("Finding instructor id: " + theId);
+		
+		Instructor tempInstructor = appDAO.findInstructorById(theId);
+		
+		System.out.println("tempInstructor: " + tempInstructor);
+		
+		//find courses for the instructor
+		System.out.println("Find courses for the instructor");
+		List<Course> courses = appDAO.findCoursesByInstructorId(theId);
+		
+		tempInstructor.setCourse(courses);
+		
+        System.out.println("Course: " + tempInstructor.getCourse());
+        
+		System.out.println("Done with courses");
 	}
 
 	private void findInstructorWithCourses(AppDAO appDAO) {
 		// TODO 自動生成されたメソッド・スタブ
 		int theId  = 1;
+		
+		System.out.println("Finding instructor id: " + theId);
 		
 		Instructor tempInstructor = appDAO.findInstructorById(theId);
 		
@@ -52,9 +161,11 @@ public class SpringMvcHibernateAdvancedMappingApplication {
 	private void createInstructorWithCourses(AppDAO appDAO) {
 		// TODO 自動生成されたメソッド・スタブ
 		
-		Instructor tempInstructor = new Instructor("takuto", "hayashi", "takuto@gmail.com");
+		Instructor tempInstructor = new 
+				Instructor("takuto", "hayashi", "takuto@gmail.com");
 		
-		InstructorDetail theInstructDetail = new InstructorDetail("https://www.javatpoint.com/java-tutorial"
+		InstructorDetail theInstructDetail = new 
+				InstructorDetail("https://www.javatpoint.com/java-tutorial"
                                                         , "Learning Piano");
 		
 		tempInstructor.setInstructorDetail(theInstructDetail);

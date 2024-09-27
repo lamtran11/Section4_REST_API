@@ -1,11 +1,15 @@
 package com.example.demo.dao;
 
+import java.util.List;
+
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.example.demo.entity.Course;
 import com.example.demo.entity.Instructor;
 import com.example.demo.entity.InstructorDetail;
 
@@ -78,6 +82,82 @@ public class AppDAOImpl implements AppDAO {
         }
 	}
 
+
+	@Override
+	public List<Course> findCoursesByInstructorId(int id) {
+		
+		TypedQuery<Course> query = entityManager.createQuery(
+				"from Course where instructor.id = :data", Course.class);
+		
+		query.setParameter("data", id);
+		
+		List<Course> courses = query.getResultList();
+		
+		return courses;
+	}
+
+		
+	@Override
+	public Instructor findInstuctorByIdJoinFetch(int id) {
+		
+		//This code will retrieve all Instructor and courses
+		TypedQuery<Instructor> query = entityManager.createQuery(
+				"SELECT i from Instructor i "
+	
+				+ "JOIN FETCH i.course " 
+				+ "JOIN FETCH i.instructorDetail " 
+				+ "WHERE i.id = :data", Instructor.class);	
+		
+		query.setParameter("data", id);
+		
+		Instructor instructor = query.getSingleResult();
+        
+        return instructor;
+        
+	}
+	
+	@Override
+	@Transactional
+	public void update(Instructor instructor) {
+		// TODO 自動生成されたメソッド・スタブ
+		entityManager.merge(instructor);
+	}
+
+
+	@Override
+	@Transactional
+	public void update(Course course) {
+		// TODO 自動生成されたメソッド・スタブ
+		entityManager.merge(course);
+	}
+	
+
+	@Override
+	public Course findCourseById(int theId) {
+		// TODO 自動生成されたメソッド・スタブ
+		return entityManager.find(Course.class, theId);
+	}
+	
+	
+	@Override
+	@Transactional
+	public void deleteInstructorById(int theId) {
+		
+		//retrieve the instructor
+		Instructor tempInstructor = entityManager.find(Instructor.class, theId);
+        
+		List<Course> courses = tempInstructor.getCourse();
+		
+		//remove all associated courses
+		//Id not do it => got constraint violation error
+		for(Course course : courses) {
+            course.setInstructor(null);
+//            entityManager.remove(course);
+        }
+        
+        entityManager.remove(tempInstructor);
+	}
+	
 }
 
 
