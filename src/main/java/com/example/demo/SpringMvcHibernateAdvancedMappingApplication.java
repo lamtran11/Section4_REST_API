@@ -11,6 +11,7 @@ import com.example.demo.dao.AppDAO;
 import com.example.demo.entity.Course;
 import com.example.demo.entity.Instructor;
 import com.example.demo.entity.InstructorDetail;
+import com.example.demo.entity.Review;
 
 @SpringBootApplication
 public class SpringMvcHibernateAdvancedMappingApplication {
@@ -46,13 +47,62 @@ public class SpringMvcHibernateAdvancedMappingApplication {
 		
 //		updateCourse(appDAO);
 		
-		//oneTOMany
-		deleteInstructorById(appDAO);
+		//oneToMany
+//		deleteInstructorById(appDAO);
+		
+//		deleteCourseById(appDAO);
+		
+		
+		//OneToMany - Uni-directional
+//		createCourseAndReviews(appDAO);
+		
+		getCourseAndReviews(appDAO);
+		
+	}
 
+	private void getCourseAndReviews(AppDAO appDAO) {
+		// TODO 自動生成されたメソッド・スタブ
+		
+		int theId = 4;
+		
+		System.out.println("Finding course and it reviews.... " + theId);
+		
+		Course course = appDAO.findCourseAndReviewsByCourseId(theId);
+		
+		System.out.println("Course: " + course);
+		
+		for (Review review : course.getReviews()) {
+            System.out.println("Review: " + review);
+        }
+	}
+
+	private void createCourseAndReviews(AppDAO appDAO) {
+		Course tempCourse = new Course("PHP");
+		
+		tempCourse.addReview(new Review("This course is awesome!"));
+		tempCourse.addReview(new Review("This course is incredibly informative and engaging!"));
+		tempCourse.addReview(new Review("I learned so much; the material was presented clearly and thoughtfully."));
+		tempCourse.addReview(new Review("Excellent course! The examples really helped me understand the concepts."));
+		tempCourse.addReview(new Review("Highly recommended! The instructor is knowledgeable and approachable."));
+		
+		System.out.println("Saving the course........");
+		
+		appDAO.save(tempCourse);
+	}
+
+	private void deleteCourseById(AppDAO appDAO) {
+		// TODO 自動生成されたメソッド・スタブ
+		int theId = 5;
+		
+		System.out.println("Deleting course id: " + theId + ".....");
+		
+		appDAO.deleteCourseById(theId);
+		
+		System.out.println("Course deleted successfully!");
 	}
 
 	private void deleteInstructorById(AppDAO appDAO) {
-		int theId = 2;
+		int theId = 3;
 		
         System.out.println("Deleting instructor id: " + theId + ".....");
         
@@ -62,7 +112,7 @@ public class SpringMvcHibernateAdvancedMappingApplication {
 	}
 
 	private void updateCourse(AppDAO appDAO) {
-		// TODO 自動生成されたメソッド・スタブ
+		//TODO 自動生成されたメソッド・スタブ
 		int theId = 25;
 		
 		System.out.println("Finding course id: " + theId + ".....");
@@ -119,7 +169,7 @@ public class SpringMvcHibernateAdvancedMappingApplication {
         
         //find courses for the instructor
         System.out.println("Find courses for the instructor");   
-        System.out.println("Course: " + tempInstructor.getCourse());
+        System.out.println("Course: " + tempInstructor.getCourses());
         
         System.out.println("Done!!!!");
         
@@ -138,9 +188,9 @@ public class SpringMvcHibernateAdvancedMappingApplication {
 		System.out.println("Find courses for the instructor");
 		List<Course> courses = appDAO.findCoursesByInstructorId(theId);
 		
-		tempInstructor.setCourse(courses);
+		tempInstructor.setCourses(courses);
 		
-        System.out.println("Course: " + tempInstructor.getCourse());
+        System.out.println("Course: " + tempInstructor.getCourses());
         
 		System.out.println("Done with courses");
 	}
@@ -154,7 +204,7 @@ public class SpringMvcHibernateAdvancedMappingApplication {
 		Instructor tempInstructor = appDAO.findInstructorById(theId);
 		
 		System.out.println("tempInstructor: " + tempInstructor);
-		System.out.println("Associate course: " + tempInstructor.getCourse());
+		System.out.println("Associate course: " + tempInstructor.getCourses());
 
 	}
 
@@ -180,7 +230,7 @@ public class SpringMvcHibernateAdvancedMappingApplication {
 		 
 		 
 		 System.out.println("Saving instructors " + tempInstructor);
-		 System.out.println("The courses: " + tempInstructor.getCourse());
+		 System.out.println("The courses: " + tempInstructor.getCourses());
 		 appDAO.save(tempInstructor);
 	
 	}

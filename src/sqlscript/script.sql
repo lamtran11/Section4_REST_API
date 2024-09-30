@@ -86,3 +86,69 @@ VALUES
 ('Keizaigaku', 5),      -- Economics by 高橋 伸二
 ('Tetsugaku', 4),       -- Philosophy by 加藤 幸子
 ('Informatics', 2);     -- Informatics by 田中 花子
+
+
+
+
+--Not Yet================================================================
+ALTER TABLE course
+ALTER COLUMN instructor_id SET NOT NULL;
+
+
+-- Drop existing foreign key constraints if they already exist
+ALTER TABLE IF EXISTS public.instructor
+    DROP CONSTRAINT IF EXISTS fk_instructor_detail;
+
+ALTER TABLE IF EXISTS public.course
+    DROP CONSTRAINT IF EXISTS course_instructor_id_fkey;
+
+-- Add cascade delete to the instructor_detail relationship
+ALTER TABLE IF EXISTS public.instructor
+    ADD CONSTRAINT fk_instructor_detail FOREIGN KEY (instructor_detail_id)
+    REFERENCES public.instructor_detail (id)
+    ON DELETE CASCADE;
+
+-- Add SET NULL on delete for the instructor_id in the course table
+ALTER TABLE IF EXISTS public.course
+    ADD CONSTRAINT course_instructor_id_fkey FOREIGN KEY (instructor_id)
+    REFERENCES public.instructor (id)
+    ON DELETE SET NULL;
+
+
+ALTER TABLE course
+ALTER COLUMN instructor_id DROP NOT NULL;
+
+
+CREATE TABLE review (
+	id SERIAL NOT NULL,
+	comment varchar(256) DEFAULT NULL,
+	course_id int DEFAULT NULL
+);
+
+ALTER TABLE review
+ADD FOREIGN KEY (course_id) REFERENCES course (id);
+
+-- Inserting sample data into the review table
+
+INSERT INTO review (comment, course_id) VALUES ('Great course on Java programming!', 1);
+INSERT INTO review (comment, course_id) VALUES ('The instructor explained the concepts clearly.', 2);
+INSERT INTO review (comment, course_id) VALUES ('Could have used more examples.', 1);
+INSERT INTO review (comment, course_id) VALUES ('Excellent course for beginners!', 3);
+INSERT INTO review (comment, course_id) VALUES ('Too fast-paced, difficult to follow.', 2);
+INSERT INTO review (comment, course_id) VALUES ('An insightful course on data structures.', 4);
+INSERT INTO review (comment, course_id) VALUES ('Loved the hands-on projects!', 4);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

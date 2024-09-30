@@ -18,6 +18,9 @@ public interface AppDAO {
 
 	void deleteInstructorDetailById(int id);
 	
+	
+	//
+	
 	List<Course> findCoursesByInstructorId(int id);
 	
 	Instructor findInstuctorByIdJoinFetch(int id);
@@ -29,4 +32,20 @@ public interface AppDAO {
 	Course findCourseById(int theId);
 	
 	void deleteInstructorById(int theId);
+	
+	void deleteCourseById(int theId);
+	
+	void save(Course course);
+	
+	Course findCourseAndReviewsByCourseId(int theId);
+	
 }
+
+
+
+
+
+
+
+
+
