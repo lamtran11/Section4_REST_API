@@ -139,7 +139,31 @@ INSERT INTO review (comment, course_id) VALUES ('An insightful course on data st
 INSERT INTO review (comment, course_id) VALUES ('Loved the hands-on projects!', 4);
 
 
+CREATE TABLE course_student(
+	course_id int NOT NULL,
+	student_id int NOT NULL,
 
+	PRIMARY KEY(course_id, student_id)
+);
+
+CREATE TABLE Student (
+	id  SERIAL NOT NULL,
+	first_name varchar(45) DEFAULT NULL,
+	last_name varchar(45) DEFAULT NULL,
+	email varchar(45) DEFAULT NULL,
+
+	PRIMARY KEY (id)
+
+);
+
+ALTER TABLE course_student
+    ADD CONSTRAINT fk_course
+    FOREIGN KEY (course_id) REFERENCES Course(id)
+    ON DELETE NO ACTION ON UPDATE NO ACTION,
+
+    ADD CONSTRAINT fk_student
+    FOREIGN KEY (student_id) REFERENCES Student(id)
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 
 

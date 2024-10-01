@@ -12,6 +12,7 @@ import com.example.demo.entity.Course;
 import com.example.demo.entity.Instructor;
 import com.example.demo.entity.InstructorDetail;
 import com.example.demo.entity.Review;
+import com.example.demo.entity.Student;
 
 @SpringBootApplication
 public class SpringMvcHibernateAdvancedMappingApplication {
@@ -56,8 +57,128 @@ public class SpringMvcHibernateAdvancedMappingApplication {
 		//OneToMany - Uni-directional
 //		createCourseAndReviews(appDAO);
 		
-		getCourseAndReviews(appDAO);
+//		getCourseAndReviews(appDAO);
+	
+//		deleteCourseAndReviews(appDAO);
 		
+	
+		//Many to many
+		
+//		createCourseAndStudents(appDAO);
+		
+//		findCourseAndItsStudent(appDAO);
+		
+//		findStudentAndCourses(appDAO);
+		
+//		addMoreCoursesForStudent(appDAO);
+		
+//		deleteCourseById(appDAO);
+		
+		deleteStudentById(appDAO);
+
+	}
+
+	private void deleteStudentById(AppDAO appDAO) {
+		// TODO 自動生成されたメソッド・スタブ
+		
+		int theId = 4;
+		
+		appDAO.deleteStudentById(theId);
+		
+		System.out.println("Student deleted with id: " + theId);
+		
+	}
+
+	private void addMoreCoursesForStudent(AppDAO appDAO) {
+		// TODO 自動生成されたメソッド・スタブ
+		
+		System.out.println("Adding more courses to student ....");
+		
+		int theId = 1;
+		
+		
+        Student student = appDAO.findStudentById(theId);
+        
+		System.out.println("studentID ...." + student);
+
+        
+        Course course1 = new Course("Spring Security");
+        Course course2 = new Course("React JS");
+        
+        student.addCourse(course1);
+        student.addCourse(course2);
+        
+        appDAO.update(student);
+        
+        System.out.println("Done adding more courses to student");
+        
+        
+	}
+
+	private void findStudentAndCourses(AppDAO appDAO) {
+		int theId = 1;
+		
+		System.out.println("Get student and its courses.......");
+		
+		Student student = appDAO.findStudentAndCoures(theId);
+		
+		System.out.println("Student: " + student);
+		
+		System.out.println("Courses: " + student.getCourses());
+		
+		System.out.println("Done !!!!!!");
+		
+	}
+
+	private void findCourseAndItsStudent(AppDAO appDAO) {
+		// TODO 自動生成されたメソッド・スタブ
+		int theId = 18;
+		
+		System.out.println("Get course and its student.......");
+		
+        Course course = appDAO.findCourseAndStudentByCourseId(theId);
+        
+        System.out.println("Course: " + course);
+        
+        System.out.println("Students: " + course.getStudents());
+        
+        System.out.println("Done !!!!!!");
+		
+
+	}
+
+	private void createCourseAndStudents(AppDAO appDAO) {
+		
+		System.out.println("Creating the course and students .......");
+		
+		//create the course
+		Course tempCourse = new Course("Spring Rest API");
+		
+		//create students
+		Student tempStudent1 = new Student("Tanaka", "Ichiro", "tanaka@gmail.com");
+		Student tempStudent2 = new Student("Muichiro", "Tokitou", "muichoro@gmail.com");
+		Student tempStudent3 = new Student("Mitsuji", "Kanagawa", "mitsuji@gmail.com");
+
+		//add student to course
+		tempCourse.addStudent(tempStudent1);
+        tempCourse.addStudent(tempStudent2);
+        tempCourse.addStudent(tempStudent3);
+		
+		//save the course and assocaited students
+		appDAO.save(tempCourse);
+		
+		System.out.println("Course and students saved successfully!");
+	}
+
+	private void deleteCourseAndReviews(AppDAO appDAO) {
+		
+		int theId = 2;
+		
+		System.out.println("Deleting the course with it reveiw");
+		
+        appDAO.deleteCourseWithReviewsByCourseId(theId);
+
+        System.out.println("Course and reviews deleted successfully!");
 	}
 
 	private void getCourseAndReviews(AppDAO appDAO) {
@@ -92,7 +213,7 @@ public class SpringMvcHibernateAdvancedMappingApplication {
 
 	private void deleteCourseById(AppDAO appDAO) {
 		// TODO 自動生成されたメソッド・スタブ
-		int theId = 5;
+		int theId = 15;
 		
 		System.out.println("Deleting course id: " + theId + ".....");
 		

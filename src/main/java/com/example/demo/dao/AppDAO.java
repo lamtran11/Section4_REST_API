@@ -5,6 +5,7 @@ import java.util.List;
 import com.example.demo.entity.Course;
 import com.example.demo.entity.Instructor;
 import com.example.demo.entity.InstructorDetail;
+import com.example.demo.entity.Student;
 
 public interface AppDAO {
 	
@@ -38,6 +39,21 @@ public interface AppDAO {
 	void save(Course course);
 	
 	Course findCourseAndReviewsByCourseId(int theId);
+	
+	void deleteCourseWithReviewsByCourseId(int theId);
+	
+	
+	//Many to Many
+	Course findCourseAndStudentByCourseId(int theId);
+	
+	Student findStudentAndCoures(int theId);
+	
+	void update(Student theStudent);
+	
+	Student findStudentById(int theId);
+	
+	void deleteStudentById(int theId);
+	
 	
 }
 
