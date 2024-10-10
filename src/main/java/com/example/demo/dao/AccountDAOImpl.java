@@ -8,10 +8,19 @@ import com.example.demo.Account;
 public class AccountDAOImpl implements AccountDAO {
 
 	@Override
-	public void addAccount(Account theAccount) {
+	public void addAccount(Account theAccount,  boolean vipFlag) {
 		// TODO 自動生成されたメソッド・スタブ
 		System.out.println(getClass() + ": DOING DB WORK: ADDING AN ACCOUNT\n");
 		
+	}
+
+	
+	@Override
+	public boolean doWork() {
+		
+		System.out.println(getClass() + ": DOING DB WORK: Go To Working");
+		
+		return false;
 	}
 	
 }

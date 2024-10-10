@@ -14,4 +14,12 @@ public class MembershipDAOImpl implements MembershipDAO {
 		return true; // assuming successful membership addition
 	}
 
+	@Override
+	public void goToSleep() {
+		// TODO 自動生成されたメソッド・スタブ
+		
+		System.out.println(getClass() + ": DOING DB WORK: GOING TO SLEEP");
+		
+	}
+
 }

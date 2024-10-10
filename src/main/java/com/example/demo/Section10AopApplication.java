@@ -9,6 +9,7 @@ import com.example.demo.dao.AccountDAO;
 import com.example.demo.dao.MembershipDAO;
 
 @SpringBootApplication
+//@EnableAspectJAutoProxy
 public class Section10AopApplication {
 
 	public static void main(String[] args) {
@@ -24,15 +25,19 @@ public class Section10AopApplication {
 			
 		};
 	}
-
-
+	
+	
 	private void demoTheBeforeAdvice(AccountDAO theAccountDAO, MembershipDAO theMembershipDAO) {
 		// TODO 自動生成されたメソッド・スタブ
 		Account myAccount = new Account();
 		
-		theAccountDAO.addAccount(myAccount);
+		theAccountDAO.addAccount(myAccount, true);
+		
+		theAccountDAO.doWork();
 		
 		theMembershipDAO.addMemberShip();		
+		
+		theMembershipDAO.goToSleep();
 		
 	}
 
