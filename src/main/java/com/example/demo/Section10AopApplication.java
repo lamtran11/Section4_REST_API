@@ -31,13 +31,25 @@ public class Section10AopApplication {
 		// TODO 自動生成されたメソッド・スタブ
 		Account myAccount = new Account();
 		
+        myAccount.setName("Yamada");
+        myAccount.setLevel("gold");
+        
 		theAccountDAO.addAccount(myAccount, true);
+
+//		theAccountDAO.doWork();
 		
-		theAccountDAO.doWork();
+		theAccountDAO.setName("Hayashi");
 		
+        theAccountDAO.setServiceCode("silver");
+        
+        String name = theAccountDAO.getName();
+        
+        String serviceCode = theAccountDAO.getServiceCode();	
+        
+        
 		theMembershipDAO.addMemberShip();		
 		
-		theMembershipDAO.goToSleep();
+//		theMembershipDAO.goToSleep();
 		
 	}
 
