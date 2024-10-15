@@ -1,9 +1,13 @@
 package com.example.demo.dao;
 
+import java.util.List;
+
 import com.example.demo.Account;
 
 public interface AccountDAO {
 	
+	List<Account> findAccounts(boolean tripWire);
+
 	void addAccount(Account theAccount, boolean vipFlag);
 	
 	boolean doWork();
@@ -15,4 +19,8 @@ public interface AccountDAO {
 	public String getServiceCode();
 	
 	public void setServiceCode(String serviceCode);
+	
+	List<Account> findAccounts();
+
 }
+
