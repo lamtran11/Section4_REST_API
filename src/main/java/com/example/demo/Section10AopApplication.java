@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 
 import com.example.demo.dao.AccountDAO;
 import com.example.demo.dao.MembershipDAO;
+import com.example.demo.service.TrafficFortuneService;
 
 @SpringBootApplication
 //@EnableAspectJAutoProxy
@@ -19,19 +20,97 @@ public class Section10AopApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner commandLineRunner (AccountDAO theAccountDAO, MembershipDAO theMembershipDAO) {
+	public CommandLineRunner commandLineRunner (AccountDAO theAccountDAO, MembershipDAO theMembershipDAO, TrafficFortuneService theTrafficFortuneService) {
 		
 		return runner -> {
 			
 //			demoTheBeforeAdvice(theAccountDAO, theMembershipDAO);			
 			
-//			demoTheAfterAdvice(theAccountDAO);
+//			demoTheAfterReturingAdvice(theAccountDAO);
 			
-			demoAfterThrowingAdvice(theAccountDAO); 
+//			demoAfterThrowingAdvice(theAccountDAO); 
+			
+//			demoAfterAdvice(theAccountDAO);
+			
+//			demoAroundAdvice(theTrafficFortuneService);
+			
+			//demoAroundAdviceHandleException(theTrafficFortuneService);
+			
+			demoAroundAdviceRethrowException(theTrafficFortuneService);
+
 		};
 	}
 	
 	
+	private void demoAroundAdviceRethrowException(TrafficFortuneService theTrafficFortuneService) {
+		// TODO 自動生成されたメソッド・スタブ
+		
+        System.out.println("\n Main Program: demoAroundAdviceRethrowException");
+        
+        boolean tripWire = true;
+        
+        try {
+            System.out.println("===>>> The fortune is: " + theTrafficFortuneService.getFortune(tripWire));
+            
+        } catch (Exception exc) {
+            // Rethrow the exception to the caller of this method
+            throw exc;
+            
+        } finally {
+            System.out.println("===>>> End of main program");
+            
+        }
+		
+	}
+
+	private void demoAroundAdviceHandleException(TrafficFortuneService theTrafficFortuneService) {
+		// TODO 自動生成されたメソッド・スタブ
+		
+		System.out.println("\n Main Program: demoAroundAdviceHandleException");
+		
+		boolean tripWire = true;
+		
+		System.out.println("===>>> The fortune is: " + theTrafficFortuneService.getFortune(tripWire));
+		
+        System.out.println("===>>> End of main program");
+		
+	}
+
+	private void demoAroundAdvice(TrafficFortuneService theTrafficFortuneService) {
+		// TODO 自動生成されたメソッド・スタブ
+		
+		System.out.println("\n Main Program: demoAroundAdvice");
+		
+		System.out.println("===>>> The fortune is: " + theTrafficFortuneService.getFortune());
+		
+        System.out.println("===>>> End of main program");
+		
+	}
+
+	private void demoAfterAdvice(AccountDAO theAccountDAO) {
+		
+		List<Account> theAccounts = null;
+		
+		try {
+			//Add boolean flag to simulate exceptions
+			boolean tripWire = false;
+			
+			theAccounts = theAccountDAO.findAccounts(tripWire);
+			
+		} catch (Exception exc) {
+			
+			System.out.println("\n............An exception occurred while retrieving accounts." + exc);
+			
+		}
+			
+		
+		System.out.println("\n--- After finally Advice ---");
+		
+		System.out.println(theAccounts);
+		
+		System.out.println("\n--- After finally Advice ---");
+	}
+
 	private void demoAfterThrowingAdvice(AccountDAO theAccountDAO) {
 		List<Account> theAccounts = null;
 		
@@ -42,7 +121,7 @@ public class Section10AopApplication {
 			theAccounts = theAccountDAO.findAccounts(tripWire);
 			
 		} catch (Exception exc){
-			System.out.println("............An exception occurred while retrieving accounts." + exc);
+			System.out.println("\n............An exception occurred while retrieving accounts." + exc);
 		}
 			
 		
@@ -54,16 +133,11 @@ public class Section10AopApplication {
 		
 	}
 
-	private void demoTheAfterAdvice(AccountDAO theAccountDAO) {
+	private void demoTheAfterReturningAdvice(AccountDAO theAccountDAO) {
 		
 		List<Account> theAccounts = theAccountDAO.findAccounts();
 		
-		System.out.println("\n--- After Advice ---");
-		
-		System.out.println(theAccounts);
-		
-		System.out.println("===>>> End of afterAdvice()");
-		
+		System.out.println(theAccounts);	
 		
 	}
 
