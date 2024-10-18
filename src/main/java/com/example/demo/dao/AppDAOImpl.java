@@ -29,14 +29,14 @@ public class AppDAOImpl implements AppDAO {
 	public void save(Instructor theInstructor) {
 		entityManager.persist(theInstructor);
 	}
-
+	
 	@Override
 	public Instructor findInstructorById(int id) {
 		
 		return entityManager.find(Instructor.class, id);
 		
 	}
-
+	
 	@Override
 	@Transactional
 	public void deleteInstructor(int id) {
@@ -48,7 +48,6 @@ public class AppDAOImpl implements AppDAO {
 		} else {
 			System.out.println("Instructor not found for delete with id: " + id);
 		}
-
 	}
 
 	@Override
@@ -77,17 +76,17 @@ public class AppDAOImpl implements AppDAO {
 			System.out.println("Instructor Detail not found for delete with id: " + id);
 		}
 	}
-
+	
 	@Override
 	public List<Course> findCoursesByInstructorId(int id) {
-
+		
 		TypedQuery<Course> query = entityManager.createQuery(
 				"from Course where instructor.id = :data", Course.class);
-
+		
 		query.setParameter("data", id);
-
+		
 		List<Course> courses = query.getResultList();
-
+		
 		return courses;
 	}
 
@@ -130,6 +129,7 @@ public class AppDAOImpl implements AppDAO {
 		// TODO 自動生成されたメソッド・スタブ
 		return entityManager.find(Course.class, theId);
 	}
+	
 
 	@Override
 	@Transactional
@@ -146,9 +146,9 @@ public class AppDAOImpl implements AppDAO {
 			course.setInstructor(null);
 			//            entityManager.remove(course);
 		}
-
 		entityManager.remove(tempInstructor);
 	}
+	
 
 	@Override
 	@Transactional
@@ -233,7 +233,7 @@ public class AppDAOImpl implements AppDAO {
 		// TODO 自動生成されたメソッド・スタブ		
 		return entityManager.find(Student.class, theId);
 	}
-
+	
 	@Override
 	@Transactional
 	public void deleteStudentById(int theId) {

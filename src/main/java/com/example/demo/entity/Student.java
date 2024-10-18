@@ -18,23 +18,23 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "student")
 public class Student {
-
+	
 	// define the fields
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // auto-increment the id field using MySQL's auto_increment feature
 	@Column(name = "id") // map to the db column named "id"
 	private int id;
-
+	
 	@Column(name = "first_name")
 	private String firstName;
-
+	
 	@Column(name = "last_name")
 	private String lastName;
-
+	
 	@Column(name = "email")
 	private String email;
-
+	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.DETACH, CascadeType.REFRESH })
 	@JoinTable(name = "course_student", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))

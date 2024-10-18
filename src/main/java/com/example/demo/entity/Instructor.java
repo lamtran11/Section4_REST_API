@@ -30,9 +30,9 @@ public class Instructor {
     // create constructors
 
     // generate getter/setter methods
-
+	
     // generate toString() method
-
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")

@@ -252,7 +252,6 @@ public class SpringMvcHibernateAdvancedMappingApplication {
         } else {
             System.out.println("Course not found with id: " + theId);
         }
-		
 	}
 
 	private void updateInstructor(AppDAO appDAO) {
@@ -270,8 +269,8 @@ public class SpringMvcHibernateAdvancedMappingApplication {
             
             appDAO.update(tempInstructor);
             
-            System.out.println("Instructor updated successfully!")
-            ;
+            System.out.println("Instructor updated successfully!");
+            
         } else {
         	System.out.println("Instructor not found with id: " + theId);
         }
@@ -418,7 +417,7 @@ public class SpringMvcHibernateAdvancedMappingApplication {
 				
 		//associate the objects
 		tempInstructor.setInstructorDetail(theInstructDetail);
-        
+        	
         //save the instructor 
         System.out.println("Saved instructor: " + tempInstructor);
         appDAO.save(tempInstructor);
@@ -426,3 +425,10 @@ public class SpringMvcHibernateAdvancedMappingApplication {
         System.out.println("Done!");
 	}
 }
+
+
+
+
+
+
+

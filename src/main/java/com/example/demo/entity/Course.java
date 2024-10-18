@@ -22,15 +22,15 @@ import jakarta.persistence.Table;
 public class Course {
 
 	// define our fields
-
+	
 	// define constructors
 
 	// define getter setters
-
+	
 	// define toString
-
+	
 	// annotate fields
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -43,6 +43,7 @@ public class Course {
 			CascadeType.DETACH, CascadeType.REFRESH })
 	@JoinColumn(name = "instructor_id")
 	private Instructor instructor;
+	
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "course_id")
@@ -50,13 +51,13 @@ public class Course {
 	
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-			CascadeType.DETACH, CascadeType.REFRESH })
+													CascadeType.DETACH, CascadeType.REFRESH })
 	@JoinTable(name = "course_student", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
 	private List<Student> students;
+		
 	
-
 	public Course() {
-
+		
 	}
 
 	public Course(String title) {
